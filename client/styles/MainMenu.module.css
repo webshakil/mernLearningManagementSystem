@@ -1,0 +1,13 @@
+.main {
+  text-decoration: none;
+}
+.wdt {
+  width: 700px;
+
+  height: 37px;
+  border-radius: 40px;
+}
+
+.bdr {
+  border: 1px solid black;
+}
