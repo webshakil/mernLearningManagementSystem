@@ -1,13 +1,36 @@
 import { GlobalOutlined, MailOutlined, SearchOutlined, SettingOutlined, ShoppingCartOutlined } from '@ant-design/icons';
 import { Image, Input, Menu } from 'antd';
+import axios from 'axios';
 import Link from 'next/link';
-import React from 'react';
+import { useRouter } from "next/router";
+import React, { useContext, useEffect, useState } from 'react';
+import { toast } from 'react-toastify';
+import { Context } from "../context";
 import styles from '../styles/MainMenu.module.css';
 
 const { SubMenu,Item} = Menu;
 
 
 const MainNav = () => {
+  const {state, dispatch}= useContext(Context);
+
+  const [isSSR, setIsSSR] = useState(true);
+
+        useEffect(() => {
+          setIsSSR(false);
+        }, []);
+
+  const router =useRouter();
+
+  const logout=async()=>{
+    dispatch({type:"LOGOUT"});
+    window.localStorage.removeItem("user");
+    const {data} =await axios.get("/api/logout");
+    toast.success(data.message);
+    router.push("/login")
+  }
+
+        
   return (
     <Menu className={styles.main} mode="horizontal">
         <Menu.Item key="image" >
@@ -24,7 +47,7 @@ const MainNav = () => {
        <Input  className={styles.wdt} placeholder="search for something" prefix={<SearchOutlined /> } /> 
     </Menu.Item>
    
-    <SubMenu key="SubMenu" icon={<SettingOutlined />} title="Navigation Three - Submenu">
+    <SubMenu key="SubMenu" icon={<SettingOutlined />} title="Navigation">
       <Menu.ItemGroup title="Item 1">
         <Menu.Item key="setting:1">Option 1</Menu.Item>
         <Menu.Item key="setting:2">Option 2</Menu.Item>
@@ -48,8 +71,8 @@ const MainNav = () => {
                 <ShoppingCartOutlined style={{ fontSize: '26px', color: '#08c' }}/>
     </Menu.Item>
     <Menu.Item  className={styles.bdr} key="login" >
-   <Link href="/login">
-          <a> Login</a>
+      <Link href="/login">
+              <a> Login</a>
         </Link>
    
     </Menu.Item>
@@ -60,12 +83,19 @@ const MainNav = () => {
           </Link>
          
       </Menu.Item>
+      <Menu.Item onClick={logout} className={styles.bdr} key="logout" >
+           Logout
+      </Menu.Item>
+      
     
     
     
     <Menu.Item  key="global">
       <GlobalOutlined style={{ fontSize: '26px', color: '#08c' }} />
     </Menu.Item>
+
+  
+    
   </Menu>
   )
 }

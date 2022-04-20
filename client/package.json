@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
+    "dev": "node server.js",
     "build": "next build",
     "start": "next start",
     "lint": "next lint"
@@ -11,10 +11,14 @@
   "dependencies": {
     "@ant-design/icons": "^4.7.0",
     "antd": "^4.19.5",
+    "axios": "^0.26.1",
     "bootstrap": "^5.0.0-alpha1",
+    "dotenv": "^16.0.0",
+    "http-proxy-middleware": "^2.0.4",
     "next": "12.1.4",
     "react": "18.0.0",
-    "react-dom": "18.0.0"
+    "react-dom": "18.0.0",
+    "react-toastify": "^8.2.0"
   },
   "devDependencies": {
     "eslint": "8.13.0",
